@@ -58,7 +58,7 @@ start_time=$(date)
 docker run --rm -v ${database_dir}:/home/atlas/databases \
 -v ${fastq_dir}:/home/atlas/data \
 -v ${output_dir}:/home/atlas/output \
--it jmtsuji/atlas:version1
+-it jmtsuji/atlas:version1 /bin/bash
 
 end_time=$(date)
 
