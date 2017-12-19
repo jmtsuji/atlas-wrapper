@@ -55,7 +55,7 @@ fi
 start_time=$(date)
 
 # Start the container (will this work??? Not yet tested - 171218)
-docker run -v ${database_dir}:/home/atlas/databases \
+docker run --rm -v ${database_dir}:/home/atlas/databases \
 -v ${fastq_dir}:/home/atlas/data \
 -v ${output_dir}:/home/atlas/output \
 -it jmtsuji/atlas:version1
