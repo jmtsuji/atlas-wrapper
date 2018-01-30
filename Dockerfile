@@ -6,6 +6,6 @@ RUN /bin/bash -c "conda install -y --name atlas_env -c bioconda python=3.6 snake
 RUN /bin/bash -c "source activate atlas_env && pip install -U 'pnnl-atlas==1.0.22'"
 RUN /bin/bash -c "mkdir -p /home/atlas"
 
-ENTRYPOINT cd /home/atlas && /bin/bash
+ENTRYPOINT cd /home/atlas && /bin/bash -c "source activate atlas_env"
 
-CMD /bin/bash -c "source activate atlas_env"
+CMD /bin/bash
