@@ -1,6 +1,7 @@
 FROM continuumio/miniconda:4.3.27p0
 LABEL maintainer="Jackson M. Tsuji <jackson.tsuji@uwaterloo.ca>"
 
+RUN /bin/bash
 RUN conda create -y --name atlas_env python=3.6 # https://conda.io/docs/user-guide/tasks/manage-environments.html#activate-env, accessed 171207
 RUN conda install -y --name atlas_env -c bioconda python=3.6 snakemake bbmap=37.17 click
 RUN source activate atlas_env
