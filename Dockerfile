@@ -7,3 +7,5 @@ RUN /bin/bash -c "source activate atlas_env && pip install -U 'pnnl-atlas==1.0.2
 RUN /bin/bash -c "mkdir -p /home/atlas"
 
 ENTRYPOINT cd /home/atlas && /bin/bash && echo "Run 'source activate atlas_env' to be able to use ATLAS."
+
+CMD /bin/bash -c "source activate atlas_env" && /bin/bash
