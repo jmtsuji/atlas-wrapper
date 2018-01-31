@@ -14,7 +14,7 @@ docker build -t pnnl/atlas:1.0.22 github.com/jmtsuji/atlas-wrapper.git
 
 2. Run the container
 ```
-docker run -it metannotate/metannotate:dev1 /bin/bash
+docker run -it pnnl/atlas:1.0.22 /bin/bash
 source activate atlas_env # Run inside the container to be able to use ATLAS
 ```
 
