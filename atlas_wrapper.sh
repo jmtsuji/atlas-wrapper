@@ -26,6 +26,7 @@ fi
 fastq_dir=$1
 output_dir=$2
 database_dir="/Hippodrome/atlas/databases" # hard-coded for now
+atlas_image="pnnl/atlas:1.0.22_bash" # for docker to run; hard-coded for now
 #################################################################
 
 #echo "Running $(basename $0) version $script_version on ${date_code} (yymmdd). Will use ${threads} threads (hard-coded into script for now)."
@@ -54,11 +55,11 @@ fi
 
 start_time=$(date)
 
-# Start the container (will this work??? Not yet tested - 171218)
+# Start the container
 docker run -v ${database_dir}:/home/atlas/databases \
 -v ${fastq_dir}:/home/atlas/data \
 -v ${output_dir}:/home/atlas/output \
--it jmtsuji/atlas:version1
+-it ${atlas_image} /bin/bash
 
 end_time=$(date)
 
