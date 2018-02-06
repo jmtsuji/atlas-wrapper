@@ -15,7 +15,7 @@ docker build -t pnnl/atlas:1.0.22 github.com/jmtsuji/atlas-wrapper.git
 2. Run the container
 ```
 docker run -it pnnl/atlas:1.0.22 /bin/bash
-source activate atlas_env # Run inside the container to be able to use ATLAS
+atlas -h # Can see ATLAS options once inside the container.
 ```
 
 Note that step 2 is just a basic example. You'll need to mount your database and metagenome files in the container to actually run ATLAS. This will be handled by the wrapper script still in development.
