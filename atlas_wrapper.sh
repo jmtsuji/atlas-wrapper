@@ -8,15 +8,13 @@ set -e
 set -u
 set -o pipefail
 
-#################################################################
-##### Global variables: #################################################
 script_version=1.0.0
-atlas_image_name="pnnl/atlas:1.0.22" # for docker to build and run; hard-coded for now
-atlas_image_source="github.com/jmtsuji/atlas-wrapper.git" # for docker to build from; hard-coded for now
-#################################################################
+date_code=$(date '+%y%m%d')
 
-function help_message {
-	printf "$(basename $0): wrapper to start a Docker container with ATLAS (for metagenome processing).\n"
+# If input field is empty, print help and end script
+if [ $# == 0 ]
+then
+	printf "\n$(basename $0): wrapper to start a Docker container with ATLAS (for metagenome processing).\n"
 	printf "Version: ${script_version}\n"
 	printf "Contact Jackson Tsuji (jackson.tsuji@uwaterloo.ca; Neufeld research group) for error reports or feature requests.\n\n"
 	printf "Usage: $(basename $0) /path/to/database/directory /path/to/metagenome/directory /path/to/output/directory\n\n"
@@ -34,7 +32,16 @@ function help_message {
 	printf "B. Make config.yaml file: atlas make-config --database-dir databases output/config.yaml data\n"
 	printf "C. Start ATLAS run: atlas assemble --jobs [number_of_jobs] --out-dir output output/config.yaml 2>&1 | tee output/atlas_run.log\n\n"
 	exit 1
-}
+fi
+
+#################################################################
+##### Settings: #################################################
+database_dir=$(realpath $1)
+fastq_dir=$(realpath $2)
+output_dir=$(realpath $3)
+atlas_image_name="pnnl/atlas:1.0.22" # for docker to build and run; hard-coded for now
+atlas_image_source="github.com/jmtsuji/atlas-wrapper.git" # for docker to build from; hard-coded for now
+#################################################################
 
 function test_directories {
 	# Description: tests that the input directories exist
@@ -81,26 +88,12 @@ function start_atlas {
 }
 
 function main {
-	# If input field is empty, print help and end script
-	if [ $# == 0 ]; then
-		help_message
-	fi
-	
-	# Define input variables
-	database_dir=$(realpath $1)
-	fastq_dir=$(realpath $2)
-	output_dir=$(realpath $3)
-	
-	# Start message
-	date_code=$(date '+%y%m%d')
 	echo "Running $(basename $0) version $script_version on ${date_code} (yymmdd). Starting ATLAS container..."
 	echo ""
 	
-	# Prep to start container
 	test_directories
 	setup_atlas
 	
-	# Start container
 	start_time=$(date)
 	start_atlas
 	end_time=$(date)
