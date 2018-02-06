@@ -8,13 +8,9 @@ set -e
 set -u
 set -o pipefail
 
-script_version=1.0.0
-
 #################################################################
-##### Settings: #################################################
-database_dir=$(realpath $1)
-fastq_dir=$(realpath $2)
-output_dir=$(realpath $3)
+##### Global variables: #################################################
+script_version=1.0.0
 atlas_image_name="pnnl/atlas:1.0.22" # for docker to build and run; hard-coded for now
 atlas_image_source="github.com/jmtsuji/atlas-wrapper.git" # for docker to build from; hard-coded for now
 #################################################################
@@ -90,13 +86,21 @@ function main {
 		help_message
 	fi
 	
+	# Define input variables
+	database_dir=$(realpath $1)
+	fastq_dir=$(realpath $2)
+	output_dir=$(realpath $3)
+	
+	# Start message
 	date_code=$(date '+%y%m%d')
 	echo "Running $(basename $0) version $script_version on ${date_code} (yymmdd). Starting ATLAS container..."
 	echo ""
 	
+	# Prep to start container
 	test_directories
 	setup_atlas
 	
+	# Start container
 	start_time=$(date)
 	start_atlas
 	end_time=$(date)
