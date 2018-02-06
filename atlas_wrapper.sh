@@ -14,7 +14,7 @@ date_code=$(date '+%y%m%d')
 # If input field is empty, print help and end script
 if [ $# == 0 ]
 then
-printf "    $(basename $0): wrapper to start a Docker container with ATLAS (for metagenome processing).\nVersion: ${script_version}\nContact Jackson Tsuji (jackson.tsuji@uwaterloo.ca; Neufeld research group) for error reports or feature requests.\n\nUsage: $(basename $0) /path/to/metagenome/directory /path/to/output/directory\n\n***Requirements:\n1. /path/to/metagenome/directory: should contain all raw fastq files for metagenome analysis. Files should not be in subfolders and (I think) should not be gzipped.\n2. /path/to/output/directory: the directory where output files from ATLAS should go. Should make a subdirectory within this called 'tmp' for ATLAS to dump temp files during processing. Your config.yaml file should also be in this folder once ready to run (use ATLAS to generate this file for you initially). \n**Ideally, use folders on Hippodrome to prevent excessive input/output on Winnebago.\n\n"
+printf "    $(basename $0): wrapper to start a Docker container with ATLAS (for metagenome processing).\nVersion: ${script_version}\nContact Jackson Tsuji (jackson.tsuji@uwaterloo.ca; Neufeld research group) for error reports or feature requests.\n\nUsage: $(basename $0) /path/to/database/directory /path/to/metagenome/directory /path/to/output/directory\n\n***Requirements:\n1. /path/to/database/directory: i.e., the database folder downloaded by ATLAS (or the folder where you want to download the ATLAS databases to from within the container).\n2. /path/to/metagenome/directory: should contain all raw fastq files for metagenome analysis. Files should not be in subfolders and (for easiest use).\n3. /path/to/output/directory: the directory where output files from ATLAS should go. Should make a subdirectory within this called 'tmp' for ATLAS to dump temp files during processing. Your config.yaml file should also be in this folder once ready to run (use ATLAS to generate this file for you initially). \n\n"
 exit 1
 fi
 # Using printf: http://stackoverflow.com/a/8467449 (accessed Feb 21, 2017)
@@ -23,9 +23,9 @@ fi
 
 #################################################################
 ##### Settings: #################################################
-fastq_dir=$1
-output_dir=$2
-database_dir="/Hippodrome/atlas/databases" # hard-coded for now
+database_dir=$(realpath $1)
+fastq_dir=$(realpath $2)
+output_dir=$(realpath $3)
 atlas_image="pnnl/atlas:1.0.22_bash" # for docker to run; hard-coded for now
 #################################################################
 
@@ -49,7 +49,7 @@ fi
 # Test that /path/to/output/directory/tmp exists, and exit if it does not
 if [ ! -d ${output_dir}/tmp ]; then
 # From http://stackoverflow.com/a/4906665, accessed Feb. 4, 2017
-    print "Did not find /path/to/output/directory/tmp ${output_dir}/tmp. Please make this folder before starting. Job terminating."
+    print "Did not find temp directory '${output_dir}/tmp'. Please make this folder before starting. Job terminating."
     exit 1
 fi
 
