@@ -71,7 +71,9 @@ function test_directories {
 function setup_atlas {
 	# Description: builds the ATLAS container with a specific tag. Doesn't rebuild if the container is already made.
 	
-	docker build -t ${atlas_image_name} ${atlas_image_source}
+	echo "Installing ATLAS docker container (if not already installed)..."
+	docker build -t ${atlas_image_name} ${atlas_image_source} > /dev/null 2>&1
+	echo ""
 	
 }
 
