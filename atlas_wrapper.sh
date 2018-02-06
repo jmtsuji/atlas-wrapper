@@ -81,7 +81,7 @@ function start_atlas {
 	docker run -v ${database_dir}:/home/atlas/databases \
 	-v ${fastq_dir}:/home/atlas/data \
 	-v ${output_dir}:/home/atlas/output \
-	-it ${atlas_image} /bin/bash
+	-it ${atlas_image_name} /bin/bash
 	
 }
 
