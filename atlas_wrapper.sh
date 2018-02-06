@@ -21,7 +21,16 @@ then
 	printf "Usage notes:\n"
 	printf "1. /path/to/database/directory: i.e., the database folder downloaded by ATLAS (or the folder where you want to download the ATLAS databases to from within the container).\n"
 	printf "2. /path/to/metagenome/directory: should contain all raw fastq files for metagenome analysis. Files should not be in subfolders and (for easiest use).\n"
-	printf "3. /path/to/output/directory: the directory where output files from ATLAS should go. Should make a subdirectory within this called 'tmp' for ATLAS to dump temp files during processing. Your config.yaml file should also be in this folder once ready to run (use ATLAS to generate this file for you initially). \n\n"
+	printf "3. /path/to/output/directory: the directory where output files from ATLAS should go. It's recommended but not necessary to make a 'tmp' subdirectory here for ATLAS to dump temp files during processing. Use this as the 'tmpdir' in your config.yaml file as '/home/atlas/output/tmp'.\n\n"
+	printf "Note that each of these directories are mapped to new directory paths within the docker container:\n"
+	printf "1. /path/to/database/directory --> /home/atlas/databases\n"
+	printf "2. /path/to/metagenome/directory --> /home/atlas/data\n"
+	printf "3. /path/to/output/directory --> /home/atlas/output\n"
+	printf "Keep this in mind when specifying file locations within the Docker container.\n\n"
+	printf "Example workflows within the container:\n"
+	printf "A. Download ATLAS databases (only needed on first use): atlas download -o /home/atlas/databases\n"
+	printf "B. Make config.yaml file: atlas make-config --database-dir databases output/config.yaml data\n"
+	printf "C. Start ATLAS run: atlas assemble --jobs [number_of_jobs] --out-dir output output/config.yaml 2>&1 | tee output/atlas_run.log\n\n"
 	exit 1
 fi
 
@@ -48,15 +57,6 @@ function test_directories {
 	if [ ! -d ${output_dir} ]; then
 	# From http://stackoverflow.com/a/4906665, accessed Feb. 4, 2017
 		print "Did not find output directory at '${output_dir}'. Job terminating."
-		exit 1
-	fi
-
-	# Test that /path/to/output/directory/tmp exists, and exit if it does not
-	if [ ! -d ${output_dir}/tmp ]; then
-	# From http://stackoverflow.com/a/4906665, accessed Feb. 4, 2017
-		print "Did not find temp directory at '${output_dir}/tmp'. \
-			Please make this folder before starting and use in your .yaml config file for the ATLAS temp folder. \
-			Job terminating."
 		exit 1
 	fi
 	
