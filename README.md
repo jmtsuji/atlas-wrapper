@@ -16,7 +16,7 @@ To get started:
 git clone https://github.com/jmtsuji/atlas-wrapper.git
 sudo chmod 755 atlas-wrapper/enter-atlas # to give run permissions
 sudo cp atlas-wrapper/enter-atlas /usr/local/bin # to install for all users; can skip this if you'd like and just run it locally
-rm -r enter-atlas # can now delete the git repo, although you might need sudo privileges for this
+rm -r atlas-wrapper # can now delete the git repo, although you might need sudo privileges for this
 ```
 Then run ATLAS, providing the locations of three important directories (but consider starting a service like `screen` or `byobu` before doing this, in case some processes take a while):
 ```
