@@ -35,9 +35,9 @@ After checking whether or not the container has already been installed, `enter-a
 3. `path_to_output_directory` --> /home/atlas/output
 
 From here, you're set to try to run ATLAS! Example workflows:
-a. Download ATLAS databases (only needed on first use): `atlas download -o /home/atlas/databases`
-b. Create `config.yaml` file: `atlas make-config --database-dir databases output/config.yaml data`
-c. Start ATLAS run: `atlas assemble --jobs [number_of_jobs] --out-dir output output/config.yaml 2>&1 | tee output/atlas_run.log`
+* Download ATLAS databases (only needed on first use): `atlas download -o /home/atlas/databases`
+* Create `config.yaml` file: `atlas make-config --database-dir databases output/config.yaml data`
+* Start ATLAS run: `atlas assemble --jobs [number_of_jobs] --out-dir output output/config.yaml 2>&1 | tee output/atlas_run.log`
 
 Once you're finished working in the container, simply type `exit` to leave the container.
 
