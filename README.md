@@ -23,11 +23,13 @@ rm -r atlas-wrapper # can now delete the git repo, although you might need sudo 
 ```
 Then run ATLAS, providing the locations of three important directories (but consider starting a service like `screen` or `byobu` before doing this, in case some processes take a while):
 ```
-enter-atlas [path_to_database_directory] [path_to_metagenome_directory] [path_to_output_directory]
+[sudo] enter-atlas [path_to_database_directory] [path_to_metagenome_directory] [path_to_output_directory]
 ```
 1. `path_to_database_directory`: directory where the ATLAS databases are stored (or mount an empty directory of your choice if you haven't downloaded the databases yet, and use `atlas` to download them as per the example below).
 2. `path_to_metagenome_directory`: directory containing all raw metagenome (FastQ) files for analysis by ATLAS.
 3. `path_to_output_directory`: directory where ATLAS will store output analyses. You can also make a `tmp` subdirectory within this directory if you'd like for where ATLAS can store its temp files (see below).
+
+(Note on `sudo`: you'll need to use this at the start of your command if you haven't configured Docker to [run without sudo for your user](https://docs.docker.com/install/linux/linux-postinstall/).)
 
 The first time you run this, `enter-atlas` will automatically install and build the ATLAS docker container for you. (For advanced users: the docker image will be saved as `pnnl/atlas:1.0.22` or whatever the latest ATLAS release is.) The first install could take a few minutes.
 
