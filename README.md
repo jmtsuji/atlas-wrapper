@@ -7,6 +7,9 @@ Neufeld Research Group, University of Waterloo, Canada
 
 **Note**: this project is still under active development.
 
+## Dependencies
+Only [Docker](https://docs.docker.com/install/#supported-platforms) is required to be installed (any Docker-compatiable OS will work). The Docker image created will take up ~2.1 GiB. However, you'll need system resources for using ATLAS itself.
+
 ## Usage
 This repo contains the `Dockerfile` to build a Docker container (like a lightweight virtual machine) with ATLAS pre-installed and the simple wrapper script `enter-atlas` to automatically install and use the Docker container.
 
